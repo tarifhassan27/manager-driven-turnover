@@ -12,6 +12,17 @@ This tests a well-known claim in HR research (Gallup: "people don't leave
 companies, they leave managers") against a controlled dataset, rather than
 taking it at face value.
 
+Synthetic data · Cox proportional hazards / survival analysis · PostgreSQL, Python, Power BI · Personal portfolio project
+
+![Slide 1](deck/slide1.png)
+![Slide 2](deck/slide2.png)
+![Slide 3](deck/slide3.png)
+![Slide 4](deck/slide4.png)
+![Slide 5](deck/slide5.png)
+![Slide 6](deck/slide6.png)
+
+Full deck: [`Manager-clustering_hazard_analysis.pptx`](Manager-clustering_hazard_analysis.pptx)
+
 ## The question
 
 > Does turnover cluster by manager, and does that clustering survive
