@@ -1,27 +1,24 @@
 # Manager-Driven Turnover: Does Turnover Cluster by Manager?
 
-## Finding
-
-Turnover clusters dramatically by manager. Employees under the highest-risk
-managers in this dataset left at roughly **25x the rate** of employees under
-the lowest-risk managers — a gap that survives controlling for grade and
-team size, both of which turned out to have no meaningful effect on their
-own.
-
-This tests a well-known claim in HR research (Gallup: "people don't leave
-companies, they leave managers") against a controlled dataset, rather than
-taking it at face value.
+A survival analysis of 2,500 employees under 180 managers, testing a
+well-known claim in HR research (Gallup: "people don't leave companies,
+they leave managers") against a controlled dataset, rather than taking
+it at face value.
 
 Synthetic data · Cox proportional hazards / survival analysis · PostgreSQL, Python, Power BI · Personal portfolio project
 
-![Slide 1](deck/slide1.png)
-![Slide 2](deck/slide2.png)
-![Slide 3](deck/slide3.png)
-![Slide 4](deck/slide4.png)
-![Slide 5](deck/slide5.png)
-![Slide 6](deck/slide6.png)
+![Slide 1](05_executive_brief/slides/slide_1.png)
 
-Full deck: [`Manager-clustering_hazard_analysis.pptx`](Manager-clustering_hazard_analysis.pptx)
+## Business problem
+
+When turnover rises, HR usually reaches for the policy levers it already
+has on hand: grade bands and span of control. The Gallup claim says
+those levers miss the point — that who someone reports to matters more
+to whether they stay than their grade or the size of their team. If
+turnover really clusters by manager, retention effort belongs with
+manager quality; if it doesn't, the effort is aimed at the wrong place.
+Full framing in
+[`01_business_problem/problem_statement.md`](01_business_problem/problem_statement.md).
 
 ## The question
 
@@ -49,8 +46,8 @@ run and came up empty before defaulting to synthetic.
   randomized candidate drivers of exit risk, plus irreducible noise
 - 43% observed exit rate, 57% right-censored (still employed at cutoff)
 
-Generator: [`generate_synthetic_data.py`](generate_synthetic_data.py).
-Column definitions: [`data_dictionary.md`](data_dictionary.md).
+Generator: [`02_data/generate_synthetic_data.py`](02_data/generate_synthetic_data.py).
+Column definitions: [`02_data/data_dictionary.md`](02_data/data_dictionary.md).
 
 ## Method
 
@@ -67,9 +64,18 @@ observations):
    variance
 5. Compare the real observed variance against the null distribution
 
-The full analysis is in [`phase3_cox_analysis.ipynb`](phase3_cox_analysis.ipynb).
+The full analysis is in
+[`03_analysis/phase3_cox_analysis.ipynb`](03_analysis/phase3_cox_analysis.ipynb).
+
+![Slide 2](05_executive_brief/slides/slide_2.png)
 
 ## Findings
+
+Turnover clusters dramatically by manager. Employees under the highest-risk
+managers in this dataset left at roughly **25x the rate** of employees under
+the lowest-risk managers — a gap that survives controlling for grade and
+team size, both of which turned out to have no meaningful effect on their
+own.
 
 | | Result |
 |---|---|
@@ -79,8 +85,12 @@ The full analysis is in [`phase3_cox_analysis.ipynb`](phase3_cox_analysis.ipynb)
 | Manager clustering | Highly significant (p ≈ 0) |
 | Manager effect size | ~25x hazard ratio spread, highest- vs. lowest-risk manager |
 
+![Slide 3](05_executive_brief/slides/slide_3.png)
+
 Grade and team size, on their own, tell you almost nothing about who
 leaves and when. Manager identity tells you a great deal.
+
+![Slide 4](05_executive_brief/slides/slide_4.png)
 
 ## Validation methodology
 
@@ -102,21 +112,27 @@ index alignment and rerunning produced the p ≈ 0 result reported above.
 The git history preserves both runs — the initial null result, the bug fix,
 and the corrected result — as the record of this process.
 
+![Slide 5](05_executive_brief/slides/slide_5.png)
+
 ## Dashboard
 
-`phase5_dashboard.pbix` (Power BI) — manager-level exit-rate bar chart,
-sortable and filterable by grade, showing the effect holds within grade
-bands individually, not just in aggregate.
+[`04_powerbi/phase5_dashboard.pbix`](04_powerbi/phase5_dashboard.pbix)
+(Power BI) — manager-level exit-rate bar chart, sortable and filterable
+by grade, showing the effect holds within grade bands individually, not
+just in aggregate.
+
+![Slide 6](05_executive_brief/slides/slide_6.png)
 
 ## Repo structure
 
-```
-generate_synthetic_data.py   synthetic data generator
-data_dictionary.md            column definitions
-employees.csv / managers.csv  generated dataset
-phase3_cox_analysis.ipynb     Cox model + manager clustering test
-phase5_dashboard.pbix         Power BI dashboard
-```
+- `01_business_problem/` — the business framing and the question
+- `02_data/` — synthetic data generator, column definitions, and the
+  generated dataset (`employees.csv`, `managers.csv`)
+- `03_analysis/` — notebook with the Cox model and the manager
+  clustering test
+- `04_powerbi/` — Power BI dashboard source file
+- `05_executive_brief/` — the deck (PowerPoint + individual slide
+  images)
 
 ## Tools
 
@@ -132,3 +148,8 @@ PostgreSQL, DBeaver, Python (`pandas`, `lifelines`), Power BI, git.
   are meaningfully different from which others — a follow-up would rank
   individual managers against a proper multiple-comparisons correction
   rather than eyeballing the dashboard's sorted bars
+
+---
+
+Full deck:
+[`Manager-clustering_hazard_analysis.pptx`](05_executive_brief/Manager-clustering_hazard_analysis.pptx)
