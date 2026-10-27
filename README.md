@@ -7,7 +7,7 @@ it at face value.
 
 Synthetic data · Cox proportional hazards / survival analysis · PostgreSQL, Python, Power BI · Personal portfolio project
 
-![Slide 1](05_executive_brief/slides/slide_1.png)
+![Slide 1](05_executive_brief/slides/slide_1.jpg)
 
 ## Business problem
 
@@ -67,14 +67,15 @@ observations):
 The full analysis is in
 [`03_analysis/phase3_cox_analysis.ipynb`](03_analysis/phase3_cox_analysis.ipynb).
 
-![Slide 2](05_executive_brief/slides/slide_2.png)
+![Slide 2](05_executive_brief/slides/slide_2.jpg)
 
 ## Findings
 
-Turnover clusters dramatically by manager. A manager at the 90th percentile
-of excess turnover drives roughly **3.1× more** than one at the 10th
-percentile — a gap that survives controlling for grade and team size, both
-of which turned out to have no meaningful effect on their own.
+Turnover clusters dramatically by manager. Employees under the highest-risk
+managers in this dataset left at **3.1× more** than employees under
+the lowest-risk managers — a gap that survives controlling for grade and
+team size, both of which turned out to have no meaningful effect on their
+own.
 
 | | Result |
 |---|---|
@@ -82,14 +83,14 @@ of which turned out to have no meaningful effect on their own.
 | Team size | No significant effect (p = 0.72) |
 | Model fit (grade + team_size alone) | Concordance 0.51 — no better than chance |
 | Manager clustering | Highly significant (p < 0.002, 0/500 permutations exceeded) |
-| Manager effect size | 3.1× excess-turnover spread, p90 vs. p10 manager (managers with ≥5 employees) |
+| Manager effect size | 3.1× excess-turnover spread, highest- vs. lowest-risk manager |
 
-![Slide 3](05_executive_brief/slides/slide_3.png)
+![Slide 3](05_executive_brief/slides/slide_3.jpg)
 
 Grade and team size, on their own, tell you almost nothing about who
 leaves and when. Manager identity tells you a great deal.
 
-![Slide 4](05_executive_brief/slides/slide_4.png)
+![Slide 4](05_executive_brief/slides/slide_4.jpg)
 
 ## Validation methodology
 
@@ -106,13 +107,12 @@ employees by position (`.values`) rather than by index, silently scrambling
 every residual to the wrong employee. Opening the sealed answer key
 revealed a manager effect too large to plausibly have been missed by a
 correctly-implemented test, which is what surfaced the bug. Fixing the
-index alignment and rerunning produced p < 0.002 (0 of 500 permutations
-exceeded the observed variance).
+index alignment and rerunning produced the p < 0.002 result reported above.
 
 The git history preserves both runs — the initial null result, the bug fix,
 and the corrected result — as the record of this process.
 
-![Slide 5](05_executive_brief/slides/slide_5.png)
+![Slide 5](05_executive_brief/slides/slide_5.jpg)
 
 ## Dashboard
 
@@ -121,7 +121,7 @@ and the corrected result — as the record of this process.
 by grade, showing the effect holds within grade bands individually, not
 just in aggregate.
 
-![Slide 6](05_executive_brief/slides/slide_6.png)
+![Slide 6](05_executive_brief/slides/slide_6.jpg)
 
 ## Repo structure
 
@@ -131,8 +131,7 @@ just in aggregate.
 - `03_analysis/` — notebook with the Cox model and the manager
   clustering test
 - `04_powerbi/` — Power BI dashboard source file
-- `05_executive_brief/` — the deck (PowerPoint + individual slide
-  images)
+- `05_executive_brief/` — the deck (PDF + individual slide images)
 
 ## Tools
 
@@ -152,4 +151,4 @@ PostgreSQL, DBeaver, Python (`pandas`, `lifelines`), Power BI, git.
 ---
 
 Full deck:
-[`Manager-clustering_hazard_analysis.pptx`](05_executive_brief/Manager-clustering_hazard_analysis.pptx)
+[`Manager-clustering_hazard_analysis.pdf`](05_executive_brief/Manager-clustering_hazard_analysis.pdf)
