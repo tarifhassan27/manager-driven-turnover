@@ -71,19 +71,18 @@ The full analysis is in
 
 ## Findings
 
-Turnover clusters dramatically by manager. Employees under the highest-risk
-managers in this dataset left at roughly **25x the rate** of employees under
-the lowest-risk managers — a gap that survives controlling for grade and
-team size, both of which turned out to have no meaningful effect on their
-own.
+Turnover clusters dramatically by manager. A manager at the 90th percentile
+of excess turnover drives roughly **3.1× more** than one at the 10th
+percentile — a gap that survives controlling for grade and team size, both
+of which turned out to have no meaningful effect on their own.
 
 | | Result |
 |---|---|
 | Grade | No significant effect (p = 0.57) |
 | Team size | No significant effect (p = 0.72) |
 | Model fit (grade + team_size alone) | Concordance 0.51 — no better than chance |
-| Manager clustering | Highly significant (p ≈ 0) |
-| Manager effect size | ~25x hazard ratio spread, highest- vs. lowest-risk manager |
+| Manager clustering | Highly significant (p < 0.002, 0/500 permutations exceeded) |
+| Manager effect size | 3.1× excess-turnover spread, p90 vs. p10 manager (managers with ≥5 employees) |
 
 ![Slide 3](05_executive_brief/slides/slide_3.png)
 
@@ -107,7 +106,8 @@ employees by position (`.values`) rather than by index, silently scrambling
 every residual to the wrong employee. Opening the sealed answer key
 revealed a manager effect too large to plausibly have been missed by a
 correctly-implemented test, which is what surfaced the bug. Fixing the
-index alignment and rerunning produced the p ≈ 0 result reported above.
+index alignment and rerunning produced p < 0.002 (0 of 500 permutations
+exceeded the observed variance).
 
 The git history preserves both runs — the initial null result, the bug fix,
 and the corrected result — as the record of this process.
